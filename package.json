@@ -1,0 +1,15 @@
+{
+  "name": "estore",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scss": "sass --no-source-map --style compressed --watch scss:public/app/css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sass": "^1.49.8"
+  }
+}
