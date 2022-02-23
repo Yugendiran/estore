@@ -19,25 +19,34 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
-        <!-- <nav>
+        <nav>
             <div class="row1">
                 <img src="img/logo.webp" alt="Logo" />
-                <ul>
+                <ul class="nav_container">
                     <a href="#"><li>Home</li></a>
                     <a href="#"><li>Categories</li></a>
                     <a href="#"><li>Latest</li></a>
                     <a href="#"><li>Contact</li></a>
                 </ul>
+                <input type="checkbox" id="check" />
+                <label for="check" class="checkbtn">
+                    <i class="bx bx-menu"></i>
+                </label>
             </div>
             <div class="row2">
                 <div class="left">
-                    <div class="search_container">
+                    <div class="input_bar">
                         <input type="text" placeholder="Search Products" />
-                        <div class="icon"><i class="bx bx-search-alt-2"></i></div>
+                        <div class="bar_icon"><i class="bx bx-search-alt-2"></i></div>
                     </div>
                 </div>
+                <div class="right">
+                    <div class="icon"><i class="bx bx-heart"></i></div>
+                    <div class="icon"><i class="bx bxs-cart"></i></div>
+                    <button class="btn">Sign In</button>
+                </div>
             </div>
-        </nav> -->
+        </nav>
 
         <!-- Header Starts -->
         <section class="header">
@@ -102,6 +111,183 @@
         </section>
         <!-- Categories Ends -->
 
+        <section class="products">
+            <h1>HOT SALE PRODUCTS</h1>
+            <div class="main_box">
+                <div class="item">
+                    <div class="tag new">NEW</div>
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag hot">HOT</div>
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="tag trend">TRENDING</div>
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+                <div class="item">
+                    <img src="img/xproduct-01.jpg.pagespeed.ic.6WHvZRJRuO.jpg" />
+                    <div class="content">
+                        <h3>Buttons tweed blazer</h3>
+                        <p><span class="green">$59.25</span> <span class="strike">$70.00</span></p>
+                    </div>
+                    <a href="#">
+                        <button class="btn"><i class="bx bxs-shopping-bag"></i> Buy Now</button>
+                    </a>
+                    <div class="icon_container">
+                        <div class="icon"><i class="bx bx-heart"></i></div>
+                        <div class="icon"><i class="bx bxs-cart"></i></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Banner1 Start -->
         <section class="banner1">
             <div class="box_main">
@@ -115,6 +301,31 @@
             </div>
         </section>
         <!-- Banner1 Ends -->
+
+        <!-- Features Start -->
+        <section class="features">
+            <div class="item">
+                <i class="bx bxs-truck"></i>
+                <h1>Free Shipping</h1>
+                <p>For all order over $99</p>
+            </div>
+            <div class="item">
+                <i class="bx bx-money"></i>
+                <h1>Money Back</h1>
+                <p>If good have problems</p>
+            </div>
+            <div class="item">
+                <i class="bx bx-support"></i>
+                <h1>Online Support</h1>
+                <p>24/7 dedicated support</p>
+            </div>
+            <div class="item">
+                <i class="bx bx-shield-quarter"></i>
+                <h1>Payment Secure</h1>
+                <p>100% secure payment</p>
+            </div>
+        </section>
+        <!-- Features End -->
 
         <!-- Offer timer starts -->
         <section class="timer">
@@ -139,5 +350,74 @@
             </div>
         </section>
         <!-- Offer timer ends -->
+
+        <!-- Newsletter Starts -->
+        <section class="newsletter">
+            <div class="main_box">
+                <h1 class="bg">NEWSLETTER</h1>
+                <img src="img/male-fashion-model-clothing-man-brad-pitt-removebg-preview.png" />
+                <div class="content">
+                    <div class="left">
+                        <h1>Get Our Latest Offers News</h1>
+                        <p>Subscribe to newsletter to get all updates.</p>
+                    </div>
+                    <div class="right">
+                        <div class="input_bar">
+                            <input type="text" placeholder="Your Email" />
+                            <div class="bar_icon"><i class="bx bx-mail-send"></i></div>
+                        </div>
+                        <button class="btn">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Newsletter Ends -->
+
+        <!-- Footer Starts -->
+        <footer>
+            <div class="one">
+                <div class="item title">
+                    <h1>EStore<span>.</span></h1>
+                    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eligendi obcaecati architecto error nobis voluptate quod!</p>
+                    <img src="img/xpayment.png.pagespeed.ic.baCZTAO1zx.jpg" />
+                </div>
+                <div class="item list">
+                    <h1>CATEGORIES</h1>
+                    <ul>
+                        <li>Women</li>
+                        <li>Men</li>
+                        <li>Kids</li>
+                        <li>Accessories</li>
+                        <li>Cosmetics</li>
+                    </ul>
+                </div>
+                <div class="item list">
+                    <h1>HELP</h1>
+                    <ul>
+                        <li>Track order</li>
+                        <li>Returns & Exchange</li>
+                        <li>Shipping</li>
+                        <li>FAQs</li>
+                        <li>Contact Us</li>
+                        <li>Terms & Conditions</li>
+                        <li>Privacy Policy</li>
+                    </ul>
+                </div>
+                <div class="item form">
+                    <h1>NEWSLETTER</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi, quos.</p>
+                    <div class="input_bar">
+                        <input type="text" placeholder="Your Email" />
+                        <div class="bar_icon"><i class="bx bx-mail-send"></i></div>
+                    </div>
+                    <button class="btn">Subscribe</button>
+                </div>
+            </div>
+            <hr />
+            <div class="two">
+                <p>Copyright © 2022 Golspoh. All rights reserved.</p>
+            </div>
+        </footer>
+        <!-- Footer Ends -->
     </body>
 </html>
