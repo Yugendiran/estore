@@ -1,9 +1,9 @@
 <!-- wpf loader Two -->
-<div id="wpf-loader-two">          
+<!-- <div id="wpf-loader-two">          
       <div class="wpf-loader-two-inner">
         <span>Loading</span>
       </div>
-    </div> 
+    </div>  -->
     <!-- / wpf loader Two -->       
   <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
@@ -31,11 +31,22 @@
               <!-- / header top left -->
               <div class="aa-header-top-right">
                 <ul class="aa-head-top-nav-right">
+                  <?php
+if(isset($_SESSION['login_user_id'])){
+  ?>
                   <li><a href="account.html">My Account</a></li>
                   <li class="hidden-xs"><a href="wishlist.html">Wishlist</a></li>
                   <li class="hidden-xs"><a href="cart.html">My Cart</a></li>
                   <li class="hidden-xs"><a href="checkout.html">Checkout</a></li>
-                  <li><a href="" data-toggle="modal" data-target="#login-modal">Login</a></li>
+                  <li><a href="account.php?logout=true">Logout</a></li>
+                  <?php
+}else{
+                  ?>
+                  <li><a href="account.php">Login</a></li>
+                  <li><a href="account.php">Register</a></li>
+                  <?php
+}
+                  ?>
                 </ul>
               </div>
             </div>
