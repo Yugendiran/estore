@@ -1,3 +1,71 @@
+<?php
+include "database/conn.php";
+
+if(isset($_GET['pid'])){
+  $pid = $_GET['pid'];
+}else{
+  header("location: index.php");
+}
+
+$select_product_details_query = "SELECT * FROM product_details WHERE product_id = $pid";
+$select_product_details_result = mysqli_query($connection, $select_product_details_query);
+$product_rows = mysqli_num_rows($select_product_details_result);
+if($product_rows >= 1){
+  while($row = mysqli_fetch_assoc($select_product_details_result)){
+    $product_id = $row['product_id'];
+    $product_name = $row['product_name'];
+    $product_price = $row['product_price'];
+    $product_short_desc = $row['product_short_desc'];
+    $product_brief_desc = $row['product_brief_desc'];
+    $product_category_id = $row['product_category_id'];
+  }
+}else{
+  header('location: 404.php');
+}
+
+if(isset($_SESSION['login_user_id'])){
+  if(isset($_GET['wishlistid'])){
+    $wishlist_id = $_GET['wishlistid'];
+
+    $select_all_wishlist_query = "SELECT * FROM wishlist WHERE wishlist_uid = $db_user_id AND wishlist_pid = $wishlist_id";
+    $select_all_wishlist_result = mysqli_query($connection, $select_all_wishlist_query);
+    $num_wishlist = mysqli_num_rows($select_all_wishlist_result);
+    if($num_wishlist >= 1){
+      alertBox("This product is already added to your wishlist.");
+    }else{
+      $insert_wishlist_query = "INSERT INTO wishlist(wishlist_uid, wishlist_pid) VALUES($db_user_id, $product_id)";
+      $insert_wishlist_result = mysqli_query($connection, $insert_wishlist_query);
+
+      if(!$insert_wishlist_result){
+        alertBox("Something went wrong. Please Try Again.");
+      }else{
+        alertBox("This product is successfully added to your wishlist.");
+      }
+    }
+  }
+
+  if(isset($_GET['cart'])){
+    $add_card = $_GET['cart'];
+
+    $select_all_cart_query = "SELECT * FROM cart WHERE cart_uid = $db_user_id AND cart_pid = $add_card";
+    $select_all_cart_result = mysqli_query($connection, $select_all_cart_query);
+    $cart_count = mysqli_num_rows($select_all_cart_result);
+    if($cart_count >= 1){
+      alertBox("This product is already added to your cart.");
+    }else{
+      $insert_cart_query = "INSERT INTO cart(cart_uid, cart_pid) VALUES($db_user_id, $product_id)";
+      $insert_cart_result = mysqli_query($connection, $insert_cart_query);
+      
+      if(!$insert_cart_result){
+        alertBox("Something went wrong. Please Try Again.");
+      }else{
+        alertBox("This product is successfully added to your cart.");
+      }
+    }
+  }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -77,28 +145,30 @@ include "includes/nav.php";
                 <!-- Modal view content -->
                 <div class="col-md-7 col-sm-7 col-xs-12">
                   <div class="aa-product-view-content">
-                    <h3>T-Shirt</h3>
+                    <h3><?php echo $product_name; ?></h3>
                     <div class="aa-price-block">
-                      <span class="aa-product-view-price">$34.99</span>
+                      <span class="aa-product-view-price">Rs:<?php echo $product_price; ?></span>
                       <p class="aa-product-avilability">Avilability: <span>In stock</span></p>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis animi, veritatis quae repudiandae quod nulla porro quidem, itaque quis quaerat!</p>
+                    <p><?php echo $product_short_desc; ?></p>
                     <h4>Size</h4>
                     <div class="aa-prod-view-size">
-                      <a href="#">S</a>
-                      <a href="#">M</a>
-                      <a href="#">L</a>
-                      <a href="#">XL</a>
+                      <select id="" name="">
+                        <?php
+$select_all_sizes_query = "SELECT * FROM product_size WHERE product_size_pid = $product_id";
+$select_all_sizes_result = mysqli_query($connection, $select_all_sizes_query);
+while($row = mysqli_fetch_assoc($select_all_sizes_result)){
+  $product_size_name = $row['product_size_name'];
+                        ?>
+                        <option value="<?php echo $product_size_name; ?>"><?php echo $product_size_name; ?></option>
+                        <?php
+}
+                        ?>
+                      </select>
                     </div>
-                    <h4>Color</h4>
-                    <div class="aa-color-tag">
-                      <a href="#" class="aa-color-green"></a>
-                      <a href="#" class="aa-color-yellow"></a>
-                      <a href="#" class="aa-color-pink"></a>                      
-                      <a href="#" class="aa-color-black"></a>
-                      <a href="#" class="aa-color-white"></a>                      
-                    </div>
+                    
                     <div class="aa-prod-quantity">
+                      <h4>Quantity</h4>
                       <form action="">
                         <select id="" name="">
                           <option selected="1" value="0">1</option>
@@ -109,15 +179,38 @@ include "includes/nav.php";
                           <option value="5">6</option>
                         </select>
                       </form>
-                      <p class="aa-prod-category">
-                        Category: <a href="#">Polo T-Shirt</a>
+                      <br>
+                      <br>
+                      <p style="margin: 0;" class="aa-prod-category">
+                        <?php
+$select_product_cat_query = "SELECT * FROM product_category WHERE product_category_id = $product_category_id";
+$select_product_cat_result = mysqli_query($connection, $select_product_cat_query);
+$category_name = mysqli_fetch_assoc($select_product_cat_result);
+                        ?>
+                        Category: <a href="product.php?cid=<?php echo $product_category_id; ?>">
+                          <?php echo $category_name['product_category_name']; ?>
+                        </a>
                       </p>
                     </div>
+                    <?php
+                    if(isset($_SESSION['login_user_id'])){
+                    ?>
                     <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
-                      <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
-                      <a class="aa-add-to-cart-btn" href="#">Compare</a>
+                      <a class="aa-add-to-cart-btn" href="product-detail.php?pid=<?php echo $product_id; ?>&cart=<?php echo $product_id; ?>">Add To Cart</a>
+                      <a class="aa-add-to-cart-btn" href="checkout.php?pid=<?php echo $product_id; ?>">Buy Now</a>
+                      <a class="aa-add-to-cart-btn" href="product-detail.php?pid=<?php echo $product_id; ?>&wishlistid=<?php echo $product_id; ?>">Wishlist</a>
                     </div>
+                    <?php
+                    }else{
+                    ?>
+                      <div class="aa-prod-view-bottom">
+                      <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
+                      <a class="aa-add-to-cart-btn" href="#">Buy Now</a>
+                      <a class="aa-add-to-cart-btn" href="account.php?redirect=">Wishlist</a>
+                    </div>
+                    <?php
+                    }
+                    ?>
                   </div>
                 </div>
               </div>
@@ -131,16 +224,7 @@ include "includes/nav.php";
               <!-- Tab panes -->
               <div class="tab-content">
                 <div class="tab-pane fade in active" id="description">
-                  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                  <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod, culpa!</li>
-                    <li>Lorem ipsum dolor sit amet.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor qui eius esse!</li>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, modi!</li>
-                  </ul>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum, iusto earum voluptates autem esse molestiae ipsam, atque quam amet similique ducimus aliquid voluptate perferendis, distinctio!</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ea, voluptas! Aliquam facere quas cumque rerum dolore impedit, dicta ducimus repellat dignissimos, fugiat, minima quaerat necessitatibus? Optio adipisci ab, obcaecati, porro unde accusantium facilis repudiandae.</p>
+                  <p><?php echo $product_brief_desc; ?></p>
                 </div>
                 <div class="tab-pane fade " id="review">
                  <div class="aa-product-review-area">
@@ -454,16 +538,30 @@ include "includes/nav.php";
 
 
   <!-- Subscribe section -->
-  <section id="aa-subscribe">
+  <section id="aa-subscribe" id="newsletter_sec">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <div class="aa-subscribe-area">
             <h3>Subscribe our newsletter </h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex, velit!</p>
-            <form action="" class="aa-subscribe-form">
-              <input type="email" name="" id="" placeholder="Enter your Email">
-              <input type="submit" value="Subscribe">
+            <p>Get interesting offers and news up-to-date!</p>
+            <?php
+if(isset($_POST['newsletter_submit'])){
+  $newsletter_email = $_POST['newsletter_email'];
+  $newsletter_email = mysqli_real_escape_string($connection, $newsletter_email);
+
+  $insert_newsletter_query = "INSERT INTO newsletter(newsletter_email, newsletter_date) VALUES('$newsletter_email', '$current_date')";
+  $insert_newsletter_result = mysqli_query($connection, $insert_newsletter_query);
+  if(!$insert_newsletter_result){
+    alertBox("Failed to subscribe. Try again.");
+  }else{
+    alertBox("Successfully subscribed.");
+  }
+}
+            ?>
+            <form action="404.php" method="post" class="aa-subscribe-form">
+              <input type="email" name="newsletter_email" required placeholder="Enter your Email">
+              <input type="submit" name="newsletter_submit" value="Subscribe">
             </form>
           </div>
         </div>

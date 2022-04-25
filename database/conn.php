@@ -55,5 +55,8 @@ if(!$connection){
       }
 }
 
+function alertBox($msg){
+    echo "<script>alert('$msg');</script>";
+}
 
 ?>

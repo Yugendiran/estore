@@ -81,10 +81,11 @@ while($row = mysqli_fetch_assoc($select_all_slider_result)){
                 <a data-seq href="<?php echo $slider_link; ?>" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
               </div>
             </li>
-            <!-- single slide item -->
-            <?php
+<?php
 }
-            ?>
+?>
+            <!-- single slide item -->
+            
           </ul>
         </div>
         <!-- slider navigation btn -->
@@ -1341,8 +1342,6 @@ while($row = mysqli_fetch_assoc($select_all_brands_result)){
               <li><a><img src="img/brand/<?php echo $brand_img; ?>" alt="<?php echo $brand_name; ?>"></a></li>
               <?php
 }
-              ?>
-              <?php
 $select_all_brands_query = "SELECT * FROM brand";
 $select_all_brands_result = mysqli_query($connection, $select_all_brands_query);
 while($row = mysqli_fetch_assoc($select_all_brands_result)){

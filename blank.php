@@ -1,7 +1,5 @@
 <?php
 
-$var = rand(64);
-
-echo $var;
+echo md5("Pikami@YA1828");
 
 ?>
