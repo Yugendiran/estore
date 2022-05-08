@@ -4,12 +4,12 @@ session_start();
 date_default_timezone_set('Asia/Kolkata');
 $current_date = date('d-m-Y');
 $current_time = date('H:i:s');
-
 $connection = mysqli_connect('localhost', 'root', '', 'estore');
 
 if(!$connection){
     echo "<script>alert('Database Not Connected');</script>";
 }else{
+    
     if(isset($_COOKIE['estore_u_c_id']) && isset($_COOKIE['estore_u_c_email']) && isset($_COOKIE['estore_u_c_pass'])){
         if(isset($_COOKIE['estore_u_c_id']) && isset($_COOKIE['estore_u_c_email']) && isset($_COOKIE['estore_u_c_pass'])){
             $user_cookie_id = $_COOKIE['estore_u_c_id'];
@@ -34,9 +34,9 @@ if(!$connection){
                         $_SESSION['login_user_id'] = $db_user_id;
                     }else{
                         echo "<script>alert('Incorrect password in cookie. You may changed your password. Please try again with new password.');</script>";
-                        setcookie("estore_u_c_id", "", time()-3600);
-                        setcookie("estore_u_c_email", "", time()-3600);
-                        setcookie("estore_u_c_pass", "", time()-3600);
+                        setcookie("estore_u_c_id", "", time()-3600, "/");
+                        setcookie("estore_u_c_email", "", time()-3600, "/");
+                        setcookie("estore_u_c_pass", "", time()-3600, "/");
                         unset($_COOKIE['estore_u_c_id']);
                         unset($_COOKIE['estore_u_c_email']);
                         unset($_COOKIE['estore_u_c_pass']);
@@ -44,15 +44,18 @@ if(!$connection){
                 }
             }else{
                 echo "<script>alert('There is no user with $user_cookie_email');</script>";
-                setcookie("estore_u_c_id", "", time()-3600);
-                setcookie("estore_u_c_email", "", time()-3600);
-                setcookie("estore_u_c_pass", "", time()-3600);
+                setcookie("estore_u_c_id", "", time()-3600, "/");
+                setcookie("estore_u_c_email", "", time()-3600, "/");
+                setcookie("estore_u_c_pass", "", time()-3600, "/");
                 unset($_COOKIE['estore_u_c_id']);
                 unset($_COOKIE['estore_u_c_email']);
                 unset($_COOKIE['estore_u_c_pass']);
             }
         }
       }
+      if(isset($_SESSION['login_user_id'])){
+        $db_user_id = $_SESSION['login_user_id'];
+    }
 }
 
 function alertBox($msg){

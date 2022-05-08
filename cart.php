@@ -1,5 +1,6 @@
 <?php
 include "database/conn.php";
+
 if(!isset($_SESSION['login_user_id'])){
   header("location: account.php?redirect=cart.php");
 }
@@ -216,7 +217,7 @@ while($row = mysqli_fetch_assoc($select_car_result)){
                  </tbody>
                </table>
 
-               <a href="#" class="aa-cart-view-btn">Proced to Checkout</a>
+               <a href="checkout.php?billing" class="aa-cart-view-btn">Proced to Checkout</a>
              </div>
            </div>
          </div>

@@ -3492,6 +3492,31 @@ img {
     color: #fff;
 }
 
+.current_add_container{
+    height: auto;
+    width: 100%;
+    margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.current_add_container .current_add_item{
+    min-height: 200px;
+    width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #aaaaaa;
+}
+
+.current_add_container .current_add_item .add_confirm_btn{
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: #ff6666;
+    min-height: 50px;
+    color: #ffffff;
+}
+
 /*==================
  RESPONSIVE DESIGN
 ====================*/

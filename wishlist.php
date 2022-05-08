@@ -15,7 +15,7 @@ if(isset($_SESSION['login_user_id'])){
     if($cart_count >= 1){
       alertBox("This product is already added to your cart.");
     }else{
-      $insert_cart_query = "INSERT INTO cart(cart_uid, cart_pid) VALUES($db_user_id, $add_card)";
+      $insert_cart_query = "INSERT INTO cart(cart_uid, cart_pid, cart_qty) VALUES($db_user_id, $add_card, 1)";
       $insert_cart_result = mysqli_query($connection, $insert_cart_query);
       
       if(!$insert_cart_result){
