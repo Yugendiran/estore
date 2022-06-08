@@ -122,25 +122,15 @@ include "includes/nav.php";
             <div class="aa-product-details-content">
               <div class="row">
                 <!-- Modal view slider -->
-                <div class="col-md-5 col-sm-5 col-xs-12">                              
-                  <div class="aa-product-view-slider">                                
-                    <div id="demo-1" class="simpleLens-gallery-container">
-                      <div class="simpleLens-container">
-                        <div class="simpleLens-big-image-container"><a data-lens-image="img/view-slider/large/polo-shirt-1.png" class="simpleLens-lens-image"><img src="img/view-slider/medium/polo-shirt-1.png" class="simpleLens-big-image"></a></div>
-                      </div>
-                      <div class="simpleLens-thumbnails-container">
-                          <a data-big-image="img/view-slider/medium/polo-shirt-1.png" data-lens-image="img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="img/view-slider/thumbnail/polo-shirt-1.png">
-                          </a>                                    
-                          <a data-big-image="img/view-slider/medium/polo-shirt-3.png" data-lens-image="img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="img/view-slider/thumbnail/polo-shirt-3.png">
-                          </a>
-                          <a data-big-image="img/view-slider/medium/polo-shirt-4.png" data-lens-image="img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                            <img src="img/view-slider/thumbnail/polo-shirt-4.png">
-                          </a>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-md-5 col-sm-5 col-xs-12" style="background: red;">                              
+                  <img src="1.jpg" class="big_img" style="width: 350px; height: 400px; margin: 10px;">
+                  <ul style="list-style-type: none; display: flex;">
+                    <li style="margin-bottom: 10px;"><img src="1.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
+                    <li style="margin-bottom: 10px;"><img src="2.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
+                    <li style="margin-bottom: 10px;"><img src="3.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
+                    <li style="margin-bottom: 10px;"><img src="4.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
+                    <li style="margin-bottom: 10px;"><img src="5.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
+                  </ul>
                 </div>
                 <!-- Modal view content -->
                 <div class="col-md-7 col-sm-7 col-xs-12">
