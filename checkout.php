@@ -7,7 +7,7 @@ if(!isset($_SESSION['login_user_id'])){
 
 if(isset($_GET['page'])){
   $cur_checkout_page = $_GET['page'];
-  if($cur_checkout_page == "billing" || $cur_checkout_page == "shipping"){
+  if($cur_checkout_page == "billing" || $cur_checkout_page == "shipping" || $cur_checkout_page == "payment_method"){
     
   }else{
     header("location: checkout.php?page=billing");
@@ -365,7 +365,7 @@ while($row = mysqli_fetch_assoc($select_address_result)){
                                 <p><?php echo $address_ct; ?></p>
                                 <p><?php echo $address_dis; ?></p>
                                 <p><?php echo $address_pincode; ?></p>
-                                <a href="ocheckout.php?bid=<?php echo $address_id; ?>&sid=<?php echo $address_id; ?>"><button type="button" class="add_confirm_btn">Ship to this address</button></a>
+                                <a href="checkout.php?page=payment_method&bid=<?php echo $billing_address; ?>&sid=<?php echo $address_id; ?>"><button type="button" class="add_confirm_btn">Ship to this address</button></a>
                                 <a href="checkout.php?dids=<?php echo $address_id; ?>&section=shipping&bid=<?php echo $billing_address; ?>"><p style="color: red;">Delete address</p></a>
                               </div>
                               <?php
@@ -448,6 +448,105 @@ while($row = mysqli_fetch_assoc($select_address_result)){
  <!-- / Cart view section -->
 <?php
 break;
+case "payment_method":
+  if(isset($_GET['bid'])){
+    $billing_address = $_GET['bid'];
+
+    $select_billing_address_query = "SELECT * FROM address WHERE address_id = $billing_address AND address_uid = $db_user_id AND address_mode = 'billing'";
+    $select_billing_address_result = mysqli_query($connection, $select_billing_address_query);
+    $select_billing_address_rows = mysqli_num_rows($select_billing_address_result);
+    if($select_billing_address_rows < 1){
+      header("location: checkout.php?page=billing");
+    }
+  }else{
+    header("location: checkout.php?page=billing");
+  }
+
+  if(isset($_GET['sid'])){
+    $shipping_address = $_GET['sid'];
+
+    $select_shipping_address_query = "SELECT * FROM address WHERE address_id = $shipping_address AND address_uid = $db_user_id AND address_mode = 'shipping'";
+    $select_shipping_address_result = mysqli_query($connection, $select_shipping_address_query);
+    $select_shipping_address_rows = mysqli_num_rows($select_shipping_address_result);
+    if($select_shipping_address_rows < 1){
+      header("location: checkout.php?page=shipping&bid=$billing_address");
+    }
+  }else{
+    header("location: checkout.php?page=shipping&bid=$billing_address");
+  }
+  ?>
+<!-- Cart view section -->
+<section id="checkout">
+   <div class="container">
+     <div class="row">
+       <div class="col-md-12">
+        <div class="checkout-area">
+          <form action="checkout.php?page=shipping&bid=<?php echo $billing_address; ?>" method="post">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="checkout-left">
+                  <div class="panel-group" id="accordion">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a>
+                            Choose Shipping Address
+                          </a>
+                        </h4>
+                    </div>
+                    <!-- Billing Details -->
+                    <div class="panel panel-default aa-checkout-billaddress">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                          Shipping Details
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseThree" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                          <!-- <div class="row">
+                            <div class="col-md-6">
+                              <div class="aa-checkout-single-bill">
+                                <input type="text" placeholder="First Name*">
+                              </div>                             
+                            </div>
+                            <div class="col-md-6">
+                              <div class="aa-checkout-single-bill">
+                                <input type="text" placeholder="Last Name*">
+                              </div>
+                            </div>
+                          </div>  -->
+                          <div class="current_add_container">
+                              <div class="current_add_item">
+                                <h4><b>Online Payment</b></h4>
+                                <ul>
+                                  <li>Credit/ Debit Card</li>
+                                  <li>UPI</li>
+                                  <li>Net Banking</li>
+                                </ul>
+                                <a href="order.php?paym=online&bid=<?php echo $billing_address; ?>&sid=<?php echo $shipping_address; ?>"><button type="button" class="add_confirm_btn">Pay Online</button></a>
+                              </div>
+                              <div class="current_add_item">
+                                <h4><b>Cash on delivery</b></h4>
+                                <a href="order.php?paym=cod&bid=<?php echo $billing_address; ?>&sid=<?php echo $shipping_address; ?>"><button type="button" class="add_confirm_btn">COD</button></a>
+                              </div>
+                          </div>                                   
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+         </div>
+       </div>
+     </div>
+   </div>
+ </section>
+ <!-- / Cart view section -->
+  <?php
+  break;
 }
 ?>
  

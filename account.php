@@ -12,9 +12,11 @@ if(isset($_GET['logout'])){
   header("location: index.php");
 }
 
-if(isset($_SESSION['login_user_id'])){
-  header("location: index.php");
-}
+// if(isset($_SESSION['login_user_id'])){
+//   header("location: index.php");
+// }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -56,7 +58,84 @@ if(isset($_SESSION['login_user_id'])){
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+<style>
+  .account_items{
+    height: auto; 
+    width: 350px;
+    margin: 10px; 
+    border-radius: 15px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .order_item{
+    min-height: 300px;
+    width: 100%;
+    display: flex;
+    /* grid-template-columns: auto auto auto; */
+    padding: 20px;
+    justify-content: space-between;
+  }
 
+  .order_item .ship{
+    max-width: 100%;
+    text-wrap: break-word;
+    padding: 10px;
+  }
+
+  .order_item .summary{
+    width: 45%;
+    padding: 10px;
+  }
+  .order_item .summary table{
+    width: 100%;
+  }
+
+  .cart_item{
+    height: 150px;
+    width: 95%;
+    margin: 10px auto;
+    border-radius: 15px;
+    border: 1px solid #aaa;
+    overflow: hidden;
+  }
+
+  .cart_item .header{
+    height: 75px;
+    width: 100%;
+    background: #aaa;
+    display: flex;
+    align-items: center;
+    overflow: auto;
+  }
+  .cart_item .header div{
+    margin: 0 20px;
+  }
+
+  .cart_item button{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 25px 0;
+  }
+
+
+  @media only screen and (max-width: 560px){
+    .account_items{
+      width: 100%;
+      margin: 0;
+    }
+
+    .order_item{
+      flex-direction: column;
+    }
+    .order_item .summary{
+    width: 100%;
+    padding: 10px;
+  }
+  }
+</style>
   </head>
   <body>
   
@@ -81,6 +160,9 @@ include "includes/nav.php";
   </section>
   <!-- / catg header banner section -->
 
+  <?php
+if(!isset($_SESSION['login_user_id'])){
+  ?>
  <!-- Cart view section -->
  <section id="aa-myaccount">
    <div class="container">
@@ -121,7 +203,12 @@ if(isset($_POST['login'])){
           }
           $_SESSION['login_user_id'] = $db_user_id;
   
-          header("location: index.php");
+          if(isset($_GET['redirect'])){
+            $redirect = substr($_GET['redirect'], 1, -1);
+            header("location: ".$redirect);
+          }else{
+            header("location: index.php");
+          }
         }else{
           echo "<p class='form_msg red'>&#9888; Incorrect password. Please try again.</p>";
         }
@@ -167,7 +254,18 @@ if(isset($_POST['login'])){
   }
 }
                 ?>
-                 <form action="account.php" method="post" class="aa-login-form">
+                <?php
+if(isset($_GET['redirect'])){
+  ?>
+<form action="account.php?redirect=<?php echo $_GET['redirect']; ?>" method="post" class="aa-login-form">
+  <?php
+}else{
+  ?>
+  <form action="account.php" method="post" class="aa-login-form">
+    <?php
+}
+                ?>
+                 
                   <label for="">Email address<span>*</span></label>
                    <input type="email" name="email" placeholder="Enter your email" required>
                    <label for="">Password<span>*</span></label>
@@ -368,6 +466,171 @@ if(isset($_GET['verification'])){
    </div>
  </section>
  <!-- / Cart view section -->
+ <?php
+}else{
+  ?>
+<!-- 404 error section -->
+<section id="aa-error">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="aa-error-area" style="display: flex; flex-direction: column; flex-wrap: wrap; align-items: center; padding: 10px;">
+            <a href="account.php?page=orders"><div class="account_items">
+              <h1>Your Orders</h1>
+              <p>Track, Return, Or buy things again.</p>
+            </div></a>
+            <a href="account.php?page=address"><div class="account_items">
+              <h1>Address</h1>
+              <p>Add/ Edit address for Delivery.</p>
+            </div></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+<?php
+if(isset($_GET['page'])){
+  $page = $_GET['page'];
+}else{
+  $page = "";
+}
+
+switch($page){
+  case "orders":
+    ?>
+<h1>Your orders:</h1>
+    <div class="cart_container">
+      <?php
+$select_all_orders_query = "SELECT * FROM order_details WHERE order_details_uid = $db_user_id";
+$select_all_orders_result = mysqli_query($connection, $select_all_orders_query);
+while($row = mysqli_fetch_assoc($select_all_orders_result)){
+  $order_details_id = $row['order_details_id'];
+  $order_details_rq_id = $row['order_details_rq_id'];
+  $order_details_pay_id = $row['order_details_pay_id'];
+  $order_details_uid = $row['order_details_uid'];
+  $order_details_token = $row['order_details_token'];
+  $order_details_pm = $row['order_details_pm'];
+  $order_details_bill = $row['order_details_bill'];
+  $order_details_ship = $row['order_details_ship'];
+  $order_details_status = $row['order_details_status'];
+  $order_details_date = $row['order_details_date'];
+
+      ?>
+      <div class="cart_item">
+        <div class="header">
+          <div>
+            <h6>Order Status</h6>
+            <?php
+if($order_details_status == "Pending"){
+  echo "<p style='color: orange;'>Pending</p>";
+}elseif($order_details_status == "Credit"){
+  echo "<p style='color: green;'>Success</p>";
+}else{
+  echo "<p style='color: red;'>Failed</p>";
+}
+            ?>
+          </div>
+          <div>
+            <h6>Order Placed</h6>
+            <?php echo $order_details_date; ?>
+          </div>
+          <div>
+            <h6>Total</h6>
+            <?php
+$total_sum = 0;
+$select_order_product_query = "SELECT * FROM order_products WHERE order_products_uid = $db_user_id AND order_products_token = '$order_details_token'";
+$select_order_product_result = mysqli_query($connection, $select_order_product_query);
+while($row = mysqli_fetch_assoc($select_order_product_result)){
+  $order_products_pid = $row['order_products_pid'];
+  $order_products_qty = $row['order_products_qty'];
+  $order_products_price = $row['order_products_price'];
+
+  $sub_total = $order_products_price * $order_products_qty;
+
+  $total_sum += $sub_total;
+}
+echo $total_sum;
+            ?>
+          </div>
+          <div>
+            <h6>Ship To</h6>
+            <?php
+$select_ship_name = mysqli_query($connection, "SELECT * FROM address WHERE address_uid = $db_user_id AND address_id = $order_details_ship AND address_mode = 'shipping'");
+$ship_row = mysqli_fetch_assoc($select_ship_name);
+echo $ship_row['address_name'];
+
+            ?>
+          </div>
+          <div>
+            <h6>Bill To</h6>
+            <?php
+$select_bill_name = mysqli_query($connection, "SELECT * FROM address WHERE address_uid = $db_user_id AND address_id = $order_details_bill AND address_mode = 'billing'");
+$bill_row = mysqli_fetch_assoc($select_bill_name);
+echo $bill_row['address_name'];
+
+            ?>
+          </div>
+          <div>
+            <h6>Order ID</h6>
+            <?php echo $order_details_token; ?>
+          </div>
+        </div>
+        <a href="account.php?page=order_detail&order_id=<?php echo $order_details_token; ?>"><button>Order Details</button></a>
+      </div>
+      <?php
+}
+      ?>
+    </div>
+    <?php
+  break;
+case "":
+  ?>
+<h1>Order Details</h1>
+    <div class="order_item">
+      <div class="ship">
+        <h4><b>Shipping Address:</b></h4>
+        <p>Menaga
+    No:2a Rb Avenue, 2nd Cross Street, Kamarajapuram
+    Sembakkam
+    CHENNAI, TAMIL NADU 600073
+    India</p>
+      </div>
+      <div class="mode">
+        <h4><b>Payment Method:</b></h4>
+        <p>Online</p>
+      </div>
+      <div class="summary">
+        <h4><b>Order Summary</b></h4>
+        <table>
+          <tr>
+            <td>Item(s) Subtotal: </td>
+            <td>1400</td>
+          </tr>
+          <tr>
+            <td>Shipping: </td>
+            <td>1400</td>
+          </tr>
+          <tr>
+            <td>Total: </td>
+            <td>1400</td>
+          </tr>
+          <tr>
+            <td>Grand Total: </td>
+            <td>1400</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <?php
+  break;
+}
+?>
+    
+  </section>
+  <!-- / 404 error section -->
+  <?php
+}
+ ?>
 <?php
 include "includes/footer.php";
 ?>

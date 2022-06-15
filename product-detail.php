@@ -90,14 +90,13 @@ if(isset($_SESSION['login_user_id'])){
     <link id="switcher" href="css/theme-color/default-theme.css" rel="stylesheet">
     <!-- Top Slider CSS -->
     <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
-
+    
     <!-- Main style sheet -->
     <link href="css/style.css" rel="stylesheet">    
 
     <!-- Google Font -->
     <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-    
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -105,8 +104,34 @@ if(isset($_SESSION['login_user_id'])){
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  
+    <style>
+		.pd_img_container{
+			float: left; 
+      list-style-type: none;
+      width: 100%;
+      overflow: auto;
+      display: flex;
+		}
 
+		.pd_img_container .pd_img_item{
+			margin: 10px 0;
+		}
+
+		.pd_img_container .pd_img_item img{
+			width: 70px; height: 70px;
+		}
+		.pd_big_img{
+			width: 100%; height: 400px; float: left; margin-top: 20px;
+		}
+
+    @media only screen and (max-width: 767px) {
+      .pd_img_container{
+        justify-content: space-between;
+      }
+    }
+
+	</style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   </head>
   <body>  
   <?php
@@ -122,14 +147,26 @@ include "includes/nav.php";
             <div class="aa-product-details-content">
               <div class="row">
                 <!-- Modal view slider -->
-                <div class="col-md-5 col-sm-5 col-xs-12" style="background: red;">                              
-                  <img src="1.jpg" class="big_img" style="width: 350px; height: 400px; margin: 10px;">
-                  <ul style="list-style-type: none; display: flex;">
-                    <li style="margin-bottom: 10px;"><img src="1.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
-                    <li style="margin-bottom: 10px;"><img src="2.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
-                    <li style="margin-bottom: 10px;"><img src="3.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
-                    <li style="margin-bottom: 10px;"><img src="4.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
-                    <li style="margin-bottom: 10px;"><img src="5.jpg" style="width: 70px; height: 70px;" class="small_img"></li>
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                  <?php
+$select_pd_pht_query1 = "SELECT * FROM product_img WHERE product_img_pid = $pid ORDER BY product_img_id DESC";
+$select_pd_pht_result1 = mysqli_query($connection, $select_pd_pht_query1);
+while($row = mysqli_fetch_assoc($select_pd_pht_result1)){
+  $pd_pht_name = $row['product_img_name'];
+}
+                  ?>
+                  <img src="img/pd/<?php echo $pd_pht_name; ?>" class="pd_big_img">                            
+                  <ul class="pd_img_container">
+                    <?php
+$select_pd_pht_query2 = "SELECT * FROM product_img WHERE product_img_pid = $pid";
+$select_pd_pht_result2 = mysqli_query($connection, $select_pd_pht_query2);
+while($row = mysqli_fetch_assoc($select_pd_pht_result2)){
+  $pd_pht_name = $row['product_img_name'];
+                    ?>
+                    <li class="pd_img_item"><img src="img/pd/<?php echo $pd_pht_name ?>" class="small_img"></li>
+<?php
+}
+?>
                   </ul>
                 </div>
                 <!-- Modal view content -->
@@ -194,9 +231,9 @@ $category_name = mysqli_fetch_assoc($select_product_cat_result);
                     }else{
                     ?>
                       <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
-                      <a class="aa-add-to-cart-btn" href="#">Buy Now</a>
-                      <a class="aa-add-to-cart-btn" href="account.php?redirect=">Wishlist</a>
+                      <a class="aa-add-to-cart-btn" href="account.php?redirect='product-detail.php?pid=<?php echo $product_id; ?>'">Add To Cart</a>
+                      <a class="aa-add-to-cart-btn" href="account.php?redirect='product-detail.php?pid=<?php echo $product_id; ?>'">Buy Now</a>
+                      <a class="aa-add-to-cart-btn" href="account.php?redirect='product-detail.php?pid=<?php echo $product_id; ?>'">Wishlist</a>
                     </div>
                     <?php
                     }
@@ -678,9 +715,23 @@ if(isset($_POST['newsletter_submit'])){
   </div>
 
 
-    
+  <script src="js/zoomsl.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$(".small_img").click(function(){
+				$(".pd_big_img").attr("src", $(this).attr("src"));
+			});
+		});
+
+		$(document).ready(function(){
+			$(".pd_big_img").imagezoomsl({
+				zoomrange: [3, 3]
+			});
+		});
+	</script>
+
   <!-- jQuery library -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
   <!-- Include all compiled plugins (below), or include individual files as needed -->
   <script src="js/bootstrap.js"></script>  
   <!-- SmartMenus jQuery plugin -->

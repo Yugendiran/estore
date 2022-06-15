@@ -26,6 +26,9 @@ switch($page){
     case "add_product":
         include "includes/products/add_product.php";
         break;
+    case "edit_product":
+        include "includes/products/edit_product.php";
+        break;
     case "category":
         include "includes/products/category.php";
         break;

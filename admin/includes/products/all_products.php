@@ -55,7 +55,7 @@ while($row = mysqli_fetch_assoc($select_all_slides_result)){
                             ?>
                         </th>
                         <th><a href="../product-detail.php?pid=<?php echo $product_id; ?>" target="_blank">View</a></th>
-                        <th><a href="product.php?page=edit_product&edit_id=<?php echo $slider_id; ?>">Edit</a></th>
+                        <th><a href="product.php?page=edit_product&edit_id=<?php echo $product_id; ?>">Edit</a></th>
                         <th><a href="product.php?del_id=<?php echo $product_id; ?>">Delete</a></th>
                     </tr>
 <?php

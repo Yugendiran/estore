@@ -4,6 +4,7 @@ session_start();
 date_default_timezone_set('Asia/Kolkata');
 $current_date = date('d-m-Y');
 $current_time = date('H:i:s');
+$current_dt = date('d-m-Y H:i:s');
 $connection = mysqli_connect('localhost', 'root', '', 'estore');
 
 if(!$connection){
@@ -28,6 +29,7 @@ if(!$connection){
                     $db_user_id = $row['user_id'];
                     $db_user_name = $row['user_name'];
                     $db_user_email = $row['user_email'];
+                    $db_user_phone = base64_decode($row['user_phone']);
                     $db_user_pass = $row['user_pass'];
                 
                     if($db_user_email == $user_cookie_email && $db_user_pass == $user_cookie_pass){
