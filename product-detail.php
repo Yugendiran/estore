@@ -44,16 +44,17 @@ if(isset($_SESSION['login_user_id'])){
     }
   }
 
-  if(isset($_GET['cart'])){
+  if(isset($_GET['cart']) & isset($_GET['size'])){
     $add_card = $_GET['cart'];
+    $add_size = $_GET['size'];
 
-    $select_all_cart_query = "SELECT * FROM cart WHERE cart_uid = $db_user_id AND cart_pid = $add_card";
+    $select_all_cart_query = "SELECT * FROM cart WHERE cart_uid = $db_user_id AND cart_pid = $add_card AND cart_size = '$add_size'";
     $select_all_cart_result = mysqli_query($connection, $select_all_cart_query);
     $cart_count = mysqli_num_rows($select_all_cart_result);
     if($cart_count >= 1){
       alertBox("This product is already added to your cart.");
     }else{
-      $insert_cart_query = "INSERT INTO cart(cart_uid, cart_pid, cart_qty) VALUES($db_user_id, $product_id, 1)";
+      $insert_cart_query = "INSERT INTO cart(cart_uid, cart_pid, cart_qty, cart_size) VALUES($db_user_id, $product_id, 1, '$add_size')";
       $insert_cart_result = mysqli_query($connection, $insert_cart_query);
       
       if(!$insert_cart_result){
@@ -180,7 +181,7 @@ while($row = mysqli_fetch_assoc($select_pd_pht_result2)){
                     <p><?php echo $product_short_desc; ?></p>
                     <h4>Size</h4>
                     <div class="aa-prod-view-size">
-                      <select id="" name="">
+                      <select id="proSize" name="" onchange="sizeChange();">
                         <?php
 $select_all_sizes_query = "SELECT * FROM product_size WHERE product_size_pid = $product_id";
 $select_all_sizes_result = mysqli_query($connection, $select_all_sizes_query);
@@ -193,7 +194,6 @@ while($row = mysqli_fetch_assoc($select_all_sizes_result)){
                         ?>
                       </select>
                     </div>
-                    
                     <div class="aa-prod-quantity">
                       <h4>Quantity</h4>
                       <form action="">
@@ -223,7 +223,7 @@ $category_name = mysqli_fetch_assoc($select_product_cat_result);
                     if(isset($_SESSION['login_user_id'])){
                     ?>
                     <div class="aa-prod-view-bottom">
-                      <a class="aa-add-to-cart-btn" href="product-detail.php?pid=<?php echo $product_id; ?>&cart=<?php echo $product_id; ?>">Add To Cart</a>
+                      <a class="aa-add-to-cart-btn" id="cartLink">Add To Cart</a>
                       <a class="aa-add-to-cart-btn" href="checkout.php?pid=<?php echo $product_id; ?>">Buy Now</a>
                       <a class="aa-add-to-cart-btn" href="product-detail.php?pid=<?php echo $product_id; ?>&wishlistid=<?php echo $product_id; ?>">Wishlist</a>
                     </div>
@@ -729,7 +729,13 @@ if(isset($_POST['newsletter_submit'])){
 			});
 		});
 	</script>
-
+<script type="text/javascript">
+function sizeChange(){
+  var proSize = document.getElementById("proSize").value;
+  document.getElementById("cartLink").setAttribute("href", "product-detail.php?pid=<?php echo $product_id; ?>&cart=<?php echo $product_id; ?>&size=" + proSize);
+}
+sizeChange();
+                    </script>
   <!-- jQuery library -->
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
   <!-- Include all compiled plugins (below), or include individual files as needed -->

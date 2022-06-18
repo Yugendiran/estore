@@ -191,11 +191,11 @@ while($row = mysqli_fetch_assoc($select_car_result)){
                <h4>Cart Totals</h4>
                <table class="aa-totals-table">
                  <tbody>
-                   <!-- <tr>
-                     <th>Subtotal</th>
-                     <td id="subTotalCart">Rs:200</td>
-                   </tr> -->
                    
+                   <tr>
+                     <th>Delivery</th>
+                     <td>Rs: 50</td>
+                   </tr>
                    <tr>
                      <th>Total</th>
                      <td id="totalCart">Rs: 200</td>
@@ -210,7 +210,7 @@ while($row = mysqli_fetch_assoc($select_car_result)){
                           // console.log(singleProductTotal);
                           sumTotalProduct += singleProductTotal;
                         }
-                        var finalTotal = document.getElementById("totalCart").innerHTML = "Rs: " + sumTotalProduct;
+                        var finalTotal = document.getElementById("totalCart").innerHTML = "Rs: " + (sumTotalProduct + 50);
                         sumTotalProduct = 0;
                      }
                    </script>

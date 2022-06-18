@@ -9,7 +9,9 @@ $connection = mysqli_connect('localhost', 'root', '', 'estore');
 if(!$connection){
     echo "<script>alert('Database Not Connected');</script>";
 }else{
-    
+    if(!isset($_SESSION['login_admin'])){
+        header("location: login.php");
+    }
 }
 
 function alertBox($msg){

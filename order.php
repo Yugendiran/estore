@@ -15,7 +15,7 @@ if(!isset($_GET['paym']) || !isset($_GET['bid']) || !isset($_GET['sid'])){
 
 $token = $db_user_id . date('dmYHis') . md5(random_bytes(5));
 $current_dt = date('d-m-y H:i');
-$insert_order_query = "INSERT INTO order_details(order_details_uid, order_details_token, order_details_pm, order_details_bill, order_details_ship, order_details_status, order_details_date) VALUES($db_user_id, '$token', '$payment_method', '$bill_add', '$ship_add', 'Pending', '$current_dt')";
+$insert_order_query = "INSERT INTO order_details(order_details_uid, order_details_token, order_details_pm, order_details_bill, order_details_ship, order_details_status, order_details_date, order_details_ship_status) VALUES($db_user_id, '$token', '$payment_method', '$bill_add', '$ship_add', 'Pending', '$current_dt', 'Order Placed')";
 $insert_order_result = mysqli_query($connection, $insert_order_query);
 if(!$insert_order_result){
     header("location: checkout.php");
@@ -27,6 +27,7 @@ $select_all_products_result = mysqli_query($connection, $select_all_products_que
 while($row = mysqli_fetch_assoc($select_all_products_result)){
     $cart_pid = $row['cart_pid'];
     $cart_qty = $row['cart_qty'];
+    $cart_size = $row['cart_size'];
 
     $select_product_details_query = "SELECT * FROM product_details WHERE product_id = $cart_pid";
     $select_product_details_result = mysqli_query($connection, $select_product_details_query);
@@ -36,9 +37,10 @@ while($row = mysqli_fetch_assoc($select_all_products_result)){
     }
     $total_price += $subtotal;
 
-    $insert_order_product_query = "INSERT INTO order_products(order_products_uid, order_products_pid, order_products_qty, order_products_token, order_products_price) VALUES($db_user_id, $cart_pid, $cart_qty, '$token', '$dbproduct_price')";
+    $insert_order_product_query = "INSERT INTO order_products(order_products_uid, order_products_pid, order_products_qty, order_products_token, order_products_price, order_products_size) VALUES($db_user_id, $cart_pid, $cart_qty, '$token', '$dbproduct_price', '$cart_size')";
     $insert_order_product_result = mysqli_query($connection, $insert_order_product_query);
 }
+$total_price += 50;
 
 $select_user_query = "SELECT * FROM users WHERE user_id = $db_user_id";
 $select_user_result = mysqli_query($connection, $select_user_query);

@@ -1,7 +1,9 @@
 <?php
+include "db/conn.php";
 include "includes/header.php";
 include "includes/sidebar.php";
 include "includes/topbar.php";
+header("location: landing_page.php");
 ?>
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">

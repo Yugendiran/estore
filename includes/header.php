@@ -34,7 +34,7 @@
                   <?php
 if(isset($_SESSION['login_user_id'])){
   ?>
-                  <li><a href="account.html">My Account</a></li>
+                  <li><a href="account.php">My Account</a></li>
                   <li class="hidden-xs"><a href="wishlist.php">Wishlist</a></li>
                   <li class="hidden-xs"><a href="cart.php">My Cart</a></li>
                   <li class="hidden-xs"><a href="checkout.php">Checkout</a></li>
@@ -93,9 +93,9 @@ $cart_count = mysqli_num_rows($select_all_cart_result);
               ?>
               <!-- search box -->
               <div class="aa-search-box">
-                <form action="">
-                  <input type="text" name="" id="" placeholder="Search here ex. 'man' ">
-                  <button type="submit"><span class="fa fa-search"></span></button>
+                <form action="product.php" method="post">
+                  <input type="text" name="search_product" id="" placeholder="Search here ex. 'man' ">
+                  <button type="submit" name="sub_search"><span class="fa fa-search"></span></button>
                 </form>
               </div>
               <!-- / search box -->             

@@ -45,7 +45,7 @@ if(isset($_GET['add_slider'])){
                 <form action="landing_page.php?page=all_banner_slider&add_slider=true" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tag</label>
-                        <input type="text" name="slider_tag" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                        <input type="text" name="slider_tag" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter tag" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Title</label>
@@ -142,7 +142,7 @@ if(isset($_GET['edit_id'])){
                 <form action="landing_page.php?page=all_banner_slider&edit_id=<?php echo $edit_id; ?>" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tag</label>
-                        <input type="text" name="slider_tag" value="<?php echo $slider_rows['slider_tag']; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" required>
+                        <input type="text" name="slider_tag" value="<?php echo $slider_rows['slider_tag']; ?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter tag" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Title</label>

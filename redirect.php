@@ -83,7 +83,7 @@ if($get_payment_status == 'Credit'){
                 ?>
             </span>
             <p>To check the order details click the button below to track the order status.</p>
-            <a href="#"> Track Order</a>
+            <a href="account.php?page=order_detail&order_id=<?php echo $_GET['token']; ?>"> Track Order</a>
           </div>
         </div>
       </div>

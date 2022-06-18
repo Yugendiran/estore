@@ -2,6 +2,12 @@
 
 include "database/conn.php";
 
+if(isset($_POST['search_product'])){
+  $search_product = $_POST['search_product'];
+}else{
+  header("location: index.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +15,7 @@ include "database/conn.php";
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title>Daily Shop | Home</title>
+    <title>Daily Shop | Product</title>
     
     <!-- Font awesome -->
     <link href="css/font-awesome.css" rel="stylesheet">
@@ -25,7 +31,6 @@ include "database/conn.php";
     <link rel="stylesheet" type="text/css" href="css/nouislider.css">
     <!-- Theme color -->
     <link id="switcher" href="css/theme-color/default-theme.css" rel="stylesheet">
-    <!-- <link id="switcher" href="css/theme-color/bridge-theme.css" rel="stylesheet"> -->
     <!-- Top Slider CSS -->
     <link href="css/sequence-theme.modern-slide-in.css" rel="stylesheet" media="all">
 
@@ -43,126 +48,35 @@ include "database/conn.php";
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  
 
   </head>
-  <body> 
-   <?php
+  <!-- !Important notice -->
+  <!-- Only for product page body tag have to added .productPage class -->
+  <body class="productPage">  
+   
+
+  <?php
 include "includes/header.php";
 include "includes/nav.php";
    ?>
-  
-  <!-- Start slider -->
-  <section id="aa-slider">
-    <div class="aa-slider-area">
-      <div id="sequence" class="seq">
-        <div class="seq-screen">
-          <ul class="seq-canvas">
-            <?php
-$select_all_slider_query = "SELECT * FROM slider";
-$select_all_slider_result = mysqli_query($connection, $select_all_slider_query);
-while($row = mysqli_fetch_assoc($select_all_slider_result)){
-  $slider_id = $row['slider_id'];
-  $slider_img = $row['slider_img'];
-  $slider_tag = $row['slider_tag'];
-  $slider_title = $row['slider_title'];
-  $slider_description = $row['slider_description'];
-  $slider_link = $row['slider_link'];
-            ?>
-            <!-- single slide item -->
-            <li>
-              <div class="seq-model">
-                <img data-seq src="img/slider/<?php echo $slider_img; ?>" alt="<?php echo $slider_title; ?>" />
-              </div>
-              <div class="seq-title">
-               <span data-seq><?php echo $slider_tag; ?></span>                
-                <h2 data-seq><?php echo $slider_title; ?></h2>                
-                <p data-seq><?php echo $slider_description; ?></p>
-                <a data-seq href="<?php echo $slider_link; ?>" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-              </div>
-            </li>
-<?php
-}
-?>
-            <!-- single slide item -->
-            
-          </ul>
-        </div>
-        <!-- slider navigation btn -->
-        <fieldset class="seq-nav" aria-controls="sequence" aria-label="Slider buttons">
-          <a type="button" class="seq-prev" aria-label="Previous"><span class="fa fa-angle-left"></span></a>
-          <a type="button" class="seq-next" aria-label="Next"><span class="fa fa-angle-right"></span></a>
-        </fieldset>
+ 
+  <!-- catg header banner section -->
+  <section id="aa-catg-head-banner">
+   <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img">
+   <div class="aa-catg-head-banner-area">
+     <div class="container">
+      <div class="aa-catg-head-banner-content">
+        <h2>Search</h2>
+        <ol class="breadcrumb">
+          <li><a href="index.php">Home</a></li>         
+          <li class="active">Search</li>
+        </ol>
       </div>
-    </div>
+     </div>
+   </div>
   </section>
-  <!-- / slider -->
-  <!-- Start Promo section -->
-  <section id="aa-promo">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-promo-area">
-            <div class="row">
-              <?php
-$select_all_left_promos_query = "SELECT * FROM promo WHERE promo_position = 'left'";
-$select_all_left_promos_result = mysqli_query($connection, $select_all_left_promos_query);
-while($row = mysqli_fetch_assoc($select_all_left_promos_result)){
-  $promo_id = $row['promo_id'];
-  $promo_img = $row['promo_img'];
-  $promo_tag = $row['promo_tag'];
-  $promo_title = $row['promo_title'];
-  $promo_link = $row['promo_link'];
-              ?>
-              <!-- promo left -->
-              <div class="col-md-5 no-padding">                
-                <div class="aa-promo-left">
-                  <div class="aa-promo-banner">                    
-                    <img src="img/promo/<?php echo $promo_img; ?>" alt="<?php echo $promo_tag; ?>">                    
-                    <div class="aa-prom-content">
-                      <span><?php echo $promo_tag; ?></span>
-                      <h4><a href="<?php echo $promo_link; ?>"><?php echo $promo_title; ?></a></h4>                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <?php
-}
-              ?>
-              <!-- promo right -->
-              <div class="col-md-7 no-padding">
-                <div class="aa-promo-right">
-                  <?php
-$select_all_right_promos_query = "SELECT * FROM promo WHERE promo_position = 'right'";
-$select_all_right_promos_result = mysqli_query($connection, $select_all_right_promos_query);
-while($row = mysqli_fetch_assoc($select_all_right_promos_result)){
-  $promo_id = $row['promo_id'];
-  $promo_img = $row['promo_img'];
-  $promo_tag = $row['promo_tag'];
-  $promo_title = $row['promo_title'];
-  $promo_link = $row['promo_link'];
-                  ?>
-                  <div class="aa-single-promo-right">
-                    <div class="aa-promo-banner">                      
-                      <img src="img/promo/<?php echo $promo_img; ?>" alt="<?php echo $promo_tag; ?>">                      
-                      <div class="aa-prom-content">
-                        <span><?php echo $promo_tag; ?></span>
-                        <h4><a href="<?php echo $promo_link; ?>"><?php echo $promo_title; ?></a></h4>                        
-                      </div>
-                    </div>
-                  </div>
-<?php
-}
-?>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- / Promo section -->
+  <!-- / catg header banner section -->
+
   <!-- product category -->
   <section id="aa-product-category">
     <div class="container">
@@ -172,7 +86,7 @@ while($row = mysqli_fetch_assoc($select_all_right_promos_result)){
             <div class="aa-product-catg-body">
               <ul class="aa-product-catg">
                 <?php
-$select_search_result_query = "SELECT * FROM product_details";
+$select_search_result_query = "SELECT * FROM product_details WHERE product_name LIKE '%$search_product%'";
 $select_search_result_result = mysqli_query($connection, $select_search_result_query);
 while($row = mysqli_fetch_assoc($select_search_result_result)){
   $product_id = $row['product_id'];
@@ -220,53 +134,10 @@ while($row = mysqli_fetch_assoc($select_pd_pht_result1)){
     </div>
   </section>
   <!-- / product category -->
-  
-  
-  <?php
-include "includes/features.php";
-  ?>
-  
-  <?php
-include "includes/testimonial.php";
-  ?>
 
-  <!-- Client Brand -->
-  <section id="aa-client-brand">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-client-brand-area">
-            <ul class="aa-client-brand-slider">
-              <?php
-$select_all_brands_query = "SELECT * FROM brand";
-$select_all_brands_result = mysqli_query($connection, $select_all_brands_query);
-while($row = mysqli_fetch_assoc($select_all_brands_result)){
-  $brand_img = $row['brand_img'];
-  $brand_name = $row['brand_name'];
-              ?>
-              <li><a><img src="img/brand/<?php echo $brand_img; ?>" alt="<?php echo $brand_name; ?>"></a></li>
-              <?php
-}
-$select_all_brands_query = "SELECT * FROM brand";
-$select_all_brands_result = mysqli_query($connection, $select_all_brands_query);
-while($row = mysqli_fetch_assoc($select_all_brands_result)){
-  $brand_img = $row['brand_img'];
-  $brand_name = $row['brand_name'];
-              ?>
-              <li><a><img src="img/brand/<?php echo $brand_img; ?>" alt="<?php echo $brand_name; ?>"></a></li>
-              <?php
-}
-              ?>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- / Client Brand -->
 
   <!-- Subscribe section -->
-  <section id="aa-subscribe" id="newsletter_sec">
+  <section id="aa-subscribe">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -287,7 +158,7 @@ if(isset($_POST['newsletter_submit'])){
   }
 }
             ?>
-            <form action="index.php" method="post" class="aa-subscribe-form">
+            <form action="product.php" method="post" class="aa-subscribe-form">
               <input type="email" name="newsletter_email" required placeholder="Enter your Email">
               <input type="submit" name="newsletter_submit" value="Subscribe">
             </form>
@@ -354,7 +225,7 @@ if(isset($_POST['newsletter_submit'])){
                     <address>
                       <p> 25 Astor Pl, NY 10003, USA</p>
                       <p><span class="fa fa-phone"></span>+1 212-982-4589</p>
-                      <p><span class="fa fa-envelope"></span>dailyshop@gmail.com</p>
+                      <p><span class="fa fa-envelope"></span>b2c@gmail.com</p>
                     </address>
                     <div class="aa-footer-social">
                       <a href="#"><span class="fa fa-facebook"></span></a>
@@ -377,7 +248,7 @@ if(isset($_POST['newsletter_submit'])){
         <div class="row">
         <div class="col-md-12">
           <div class="aa-footer-bottom-area">
-            <p>Designed by <a href="http://www.markups.io/">MarkUps.io</a></p>
+            <p>Designed by <a href="http://www.markups.io/">b2c</a></p>
             <div class="aa-footer-payment">
               <span class="fa fa-cc-mastercard"></span>
               <span class="fa fa-cc-visa"></span>
@@ -391,7 +262,6 @@ if(isset($_POST['newsletter_submit'])){
     </div>
   </footer>
   <!-- / footer -->
-
   <!-- Login Modal -->  
   <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -414,7 +284,10 @@ if(isset($_POST['newsletter_submit'])){
         </div>                        
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-  </div>    
+  </div>
+
+
+    
 
   <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -436,6 +309,7 @@ if(isset($_POST['newsletter_submit'])){
   <script type="text/javascript" src="js/nouislider.js"></script>
   <!-- Custom js -->
   <script src="js/custom.js"></script> 
+  
 
   </body>
 </html>
